@@ -1,10 +1,3 @@
-// const {
-//   ApolloServer,
-//   introspectSchema,
-//   makeRemoteExecutableSchema,
-//   transformSchema,
-//   FilterRootFields,
-// } = require("apollo-server");
 const {
   ApolloServer,
   introspectSchema,
@@ -20,6 +13,8 @@ const { SubscriptionClient } = require("subscriptions-transport-ws");
 const fetch = require("node-fetch");
 const ws = require("ws");
 const express = require("express");
+
+const { hiddenFields, maintainerEmail } = require("./config");
 
 const MINA_GRAPHQL_HOST = process.env["MINA_GRAPHQL_HOST"] || "localhost";
 const MINA_GRAPHQL_PORT = process.env["MINA_GRAPHQL_PORT"] || 3085;
@@ -57,25 +52,6 @@ async function getRemoteSchema({ uri, subscriptionsUri }) {
 }
 
 function wrapSchema(originalSchema) {
-  const hiddenFields = [
-    "trackedAccounts",
-    "currentSnarkWorker",
-    "createAccount",
-    "createHDAccount",
-    "unlockAccount",
-    "lockAccount",
-    "deleteAccount",
-    "reloadAccounts",
-    "exportLogs",
-    "setStaking",
-    "setSnarkWorker",
-    "setSnarkWorkFee",
-    "setConnectionGatingConfig",
-    "addPeers",
-    "archivePrecomputedBlock",
-    "archiveExtensionalBlock",
-  ];
-
   const transformers = [
     new FilterRootFields((operation, fieldName, field) => !field.isDeprecated),
     new FilterRootFields(
@@ -86,36 +62,12 @@ function wrapSchema(originalSchema) {
   return transformSchema(originalSchema, transformers);
 }
 
-// async function run() {
-//   const graphqlUri = `${MINA_GRAPHQL_HOST}:${MINA_GRAPHQL_PORT}${MINA_GRAPHQL_PATH}`;
-
-//   const remoteSchema = await getRemoteSchema({
-//     uri: `http://${graphqlUri}`,
-//     subscriptionsUri: `ws://${graphqlUri}`,
-//   });
-//   const schema = wrapSchema(remoteSchema);
-
-//   const app = express();
-
-//   const server = new ApolloServer({
-//     schema,
-//     introspection: true,
-//     playground: true,
-//   });
-//   server.applyMiddleware({ app });
-
-//   //   server.listen().then(({ url, subscriptionsUrl }) => {
-//   //     console.log(`🚀 Server ready at ${url}`);
-//   //     console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`);
-//   //   });
-// }
-
 require("greenlock-express")
   .init({
     packageRoot: __dirname,
 
     // contact for security and critical bug notices
-    maintainerEmail: "vanphandinh@outlook.com",
+    maintainerEmail,
 
     // where to look for configuration
     configDir: "./greenlock.d",
@@ -147,7 +99,6 @@ async function httpsWorker(glx) {
 
   // we need the raw https server
   const httpServer = glx.httpsServer();
-
   server.installSubscriptionHandlers(httpServer);
 
   glx.serveApp(app);
