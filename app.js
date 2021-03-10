@@ -86,7 +86,48 @@ function wrapSchema(originalSchema) {
   return transformSchema(originalSchema, transformers);
 }
 
-async function run() {
+// async function run() {
+//   const graphqlUri = `${MINA_GRAPHQL_HOST}:${MINA_GRAPHQL_PORT}${MINA_GRAPHQL_PATH}`;
+
+//   const remoteSchema = await getRemoteSchema({
+//     uri: `http://${graphqlUri}`,
+//     subscriptionsUri: `ws://${graphqlUri}`,
+//   });
+//   const schema = wrapSchema(remoteSchema);
+
+//   const app = express();
+
+//   const server = new ApolloServer({
+//     schema,
+//     introspection: true,
+//     playground: true,
+//   });
+//   server.applyMiddleware({ app });
+
+//   //   server.listen().then(({ url, subscriptionsUrl }) => {
+//   //     console.log(`🚀 Server ready at ${url}`);
+//   //     console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`);
+//   //   });
+// }
+
+require("greenlock-express")
+  .init({
+    packageRoot: __dirname,
+
+    // contact for security and critical bug notices
+    maintainerEmail: "vanphandinh@outlook.com",
+
+    // where to look for configuration
+    configDir: "./greenlock.d",
+
+    // whether or not to run at cloudscale
+    cluster: false,
+  })
+  // Serves on 80 and 443
+  // Get's SSL certificates magically!
+  .ready(httpsWorker);
+
+async function httpsWorker(glx) {
   const graphqlUri = `${MINA_GRAPHQL_HOST}:${MINA_GRAPHQL_PORT}${MINA_GRAPHQL_PATH}`;
 
   const remoteSchema = await getRemoteSchema({
@@ -104,27 +145,10 @@ async function run() {
   });
   server.applyMiddleware({ app });
 
-  //   server.listen().then(({ url, subscriptionsUrl }) => {
-  //     console.log(`🚀 Server ready at ${url}`);
-  //     console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`);
-  //   });
+  // we need the raw https server
+  const httpServer = glx.httpsServer();
 
-  require("greenlock-express")
-    .init({
-      packageRoot: __dirname,
+  server.installSubscriptionHandlers(httpServer);
 
-      // contact for security and critical bug notices
-      maintainerEmail: "vanphandinh@outlook.com",
-
-      // where to look for configuration
-      configDir: "./greenlock.d",
-
-      // whether or not to run at cloudscale
-      cluster: false,
-    })
-    // Serves on 80 and 443
-    // Get's SSL certificates magically!
-    .serve(app);
+  glx.serveApp(app);
 }
-
-run().catch(console.log);
