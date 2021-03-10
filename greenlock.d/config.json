@@ -17,9 +17,7 @@
   "sites": [
     {
       "subject": "minagraph.com",
-      "altnames": [
-        "minagraph.com"
-      ],
+      "altnames": ["minagraph.com"],
       "renewAt": 1
     }
   ]
