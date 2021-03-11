@@ -19,7 +19,7 @@ It automatically add and renew the HTTPS for your domain thanks to https://letse
 ## Environments
 This docker-compose file contains the following environment variables:
 
-* `MAINTAINER_EMAIL` the default value is **mail@google.com** -- your email, can be used to 
+* `MAINTAINER_EMAIL` the default value is **mail@google.com** -- your email, contact for security and critical bug notices
 * `DOMAIN` the default value is **google.com** -- the domain of your GraphQL API node
 * `MINA_GRAPHQL_HOST` the default value is **localhost**
 * `MINA_GRAPHQL_PORT` the default value is **3085**
@@ -34,7 +34,8 @@ docker network create mina-network
 ```
 
 2. Run a Mina node without block production or snark work creation on Docker
-Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
+
+### Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
 
 * Below flag `--restart=always \` add flag `--network=mina-network \`
 * Remove flag `--mount "type=bind,source=`pwd`/keys,dst=/keys,readonly" \`
