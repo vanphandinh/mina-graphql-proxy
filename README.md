@@ -76,9 +76,9 @@ Notice: `mina-container-name` is the name of the container that's running the Mi
 If the mina-graphql-proxy can't connect to `mina-container-name:3085`, the following options are possible:  
 - Access to port `3085` is blocked via ufw\iptables  
 - You did not add a docker container flag `--network=mina-network \`  
-- Node is not synced yet. For this reason the stopper can't connect  
+- Node is not synced yet. For this reason the tool can't connect  
 
-2. Port responds, but the stopper still can't connect  
+2. Port responds, but the tool still can't connect  
 `iptables -D OUTPUT -d 172.16.0.0/12 -j DROP`  
 it's because of the blocking of private subnets that the docker uses  
 
