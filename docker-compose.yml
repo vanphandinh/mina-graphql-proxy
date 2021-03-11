@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mina-graphql-proxy:
-    container_name: mina-graphql-proxy
+    container_name: mina-graphql-api
     build:
       context: .
       dockerfile: Dockerfile
