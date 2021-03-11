@@ -38,7 +38,7 @@ docker network create mina-network
 ### Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
 
 * Below flag `--restart=always \` add flag `--network=mina-network \`
-* Remove flag `--mount "type=bind,source=``pwd``/keys,dst=/keys,readonly" \`
+* Remove flag `--mount "type=bind,source=\`pwd\`/keys,dst=/keys,readonly" \`
 * Remove flag `-e CODA_PRIVKEY_PASS="YOUR PASSWORD HERE" \`
 * Remove flag `--block-producer-key /keys/my-wallet \`
 
