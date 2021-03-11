@@ -1,5 +1,4 @@
 module.exports = {
-  maintainerEmail: "vanphandinh@outlook.com",
   hiddenFields: [
     "trackedAccounts",
     "currentSnarkWorker",

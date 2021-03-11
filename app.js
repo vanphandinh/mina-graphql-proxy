@@ -14,11 +14,12 @@ const fetch = require("node-fetch");
 const ws = require("ws");
 const express = require("express");
 
-const { hiddenFields, maintainerEmail } = require("./config");
+const { hiddenFields } = require("./config");
 
 const MINA_GRAPHQL_HOST = process.env["MINA_GRAPHQL_HOST"] || "localhost";
 const MINA_GRAPHQL_PORT = process.env["MINA_GRAPHQL_PORT"] || 3085;
 const MINA_GRAPHQL_PATH = process.env["MINA_GRAPHQL_PATH"] || "/graphql";
+const MAINTAINER_EMAIL = process.env["MAINTAINER_EMAIL"] || "mail@google.com";
 
 async function getRemoteSchema({ uri, subscriptionsUri }) {
   const httpLink = new HttpLink({ uri, fetch });
@@ -67,7 +68,7 @@ require("greenlock-express")
     packageRoot: __dirname,
 
     // contact for security and critical bug notices
-    maintainerEmail,
+    maintainerEmail: MAINTAINER_EMAIL,
 
     // where to look for configuration
     configDir: "./greenlock.d",
@@ -90,16 +91,21 @@ async function httpsWorker(glx) {
 
   const app = express();
 
+  app.get("/", (req, res) => {
+    res.status(301).redirect("/graphql");
+  });
+
   const server = new ApolloServer({
     schema,
-    introspection: true,
     playground: true,
+    tracing: true,
+    introspection: true,
   });
   server.applyMiddleware({ app });
 
   // we need the raw https server
-  const httpServer = glx.httpsServer();
-  server.installSubscriptionHandlers(httpServer);
+  const httpsServer = glx.httpsServer();
+  server.installSubscriptionHandlers(httpsServer);
 
   glx.serveApp(app);
 }

@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  mina-graphql-proxy:
+    container_name: mina-graphql-proxy
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
+        DOMAIN: ${DOMAIN:-google.com}
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      MINA_GRAPHQL_HOST: ${MINA_GRAPHQL_HOST:-localhost}
+      MINA_GRAPHQL_PORT: ${MINA_GRAPHQL_PORT:-3085}
+      MINA_GRAPHQL_PATH: ${MINA_GRAPHQL_PATH:-"/graphql"}
+      MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
+    restart: always
+    networks:
+      - mina-network
+
+networks:
+  mina-network:
+    name: mina-network
+    driver: bridge
