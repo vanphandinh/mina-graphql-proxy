@@ -35,7 +35,7 @@ docker network create mina-network
 
 2. Run a Mina node without block production or snark work creation on Docker
 
-### Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
+#### Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
 
 * Below flag `--restart=always \` add flag `--network=mina-network \`
 * Remove flag ``--mount "type=bind,source=\`pwd\`/keys,dst=/keys,readonly" \``
