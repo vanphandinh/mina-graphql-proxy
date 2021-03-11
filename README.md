@@ -1,10 +1,10 @@
 # mina-graphql-proxy
-The GraphQL proxy for Mina Protocol
+The GraphQL proxy for Mina Protocol\
 An alternative public GraphQL API node for Mina: https://minagraph.com
 
 ## Description
-This tool can be useful for Mina developers who want to run a public Mina GraphQL API node on Docker.
-It exposes the GraphQL API from the Mina node to the internet and removes the queries that pose a threat but still allows querying of the node's data from a public endpoint.
+This tool can be useful for Mina developers who want to run a public Mina GraphQL API node on Docker.\
+It exposes the GraphQL API from the Mina node to the internet and removes the queries that pose a threat but still allows querying of the node's data from a public endpoint.\
 It automatically add and renew the HTTPS for your domain thanks to https://letsencrypt.org & https://www.npmjs.com/package/greenlock-express
 
 ## Requirements
