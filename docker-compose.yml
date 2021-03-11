@@ -9,6 +9,7 @@ services:
       args:
         MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
         DOMAIN: ${DOMAIN:-google.com}
+    image: mina-graphql-proxy
     ports:
       - "80:80"
       - "443:443"
