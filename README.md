@@ -28,10 +28,12 @@ This docker-compose file contains the following environment variables:
 ## Usages
 How to use this repo to run a public Mina GraphQL API node with the Mina node.
 
+
 1. Create a docker network: mina-network
 ```
 docker network create mina-network
 ```
+
 
 2. Run a Mina node without block production or snark work creation on Docker
 
@@ -56,6 +58,7 @@ daemon \
 --log-level Info \
 --peer-list-url https://storage.googleapis.com/seed-lists/finalfinal2_seeds.txt
 ```
+
 
 3. Run the GraphQL proxy container
 ```
