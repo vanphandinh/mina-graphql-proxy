@@ -21,8 +21,8 @@ ENV MAINTAINER_EMAIL=$MAINTAINER_EMAIL
 ENV DOMAIN=$DOMAIN
 
 RUN npx greenlock init --config-dir ./greenlock.d --maintainer-email ${MAINTAINER_EMAIL} && rm server.js
-RUN npx greenlock add --subject ${DOMAIN} --altnames ${DOMAIN}
+RUN npx greenlock add --subject ${DOMAIN} --altnames "${DOMAIN},www.${DOMAIN}"
 
 EXPOSE 80
 EXPOSE 443
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start"]

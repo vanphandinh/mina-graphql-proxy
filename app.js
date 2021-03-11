@@ -74,11 +74,14 @@ require("greenlock-express")
     configDir: "./greenlock.d",
 
     // whether or not to run at cloudscale
-    cluster: false,
+    cluster: true,
   })
   // Serves on 80 and 443
   // Get's SSL certificates magically!
-  .ready(httpsWorker);
+  .ready(httpsWorker)
+  .master(function () {
+    console.log("I'm the master");
+  });
 
 async function httpsWorker(glx) {
   const graphqlUri = `${MINA_GRAPHQL_HOST}:${MINA_GRAPHQL_PORT}${MINA_GRAPHQL_PATH}`;
