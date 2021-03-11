@@ -13,7 +13,7 @@ It automatically adds and renews the HTTPS for your domain, thanks to [LetsEncry
 
 ## Quick Start
 * Clone or download this repository
-* Go inside of directory,  `cd mina-graphql-proxy`
+* Go inside of directory, `cd mina-graphql-proxy`
 * Run this command `docker-compose up -d`
 
 ## Environments
@@ -58,6 +58,9 @@ daemon \
 ```
 
 3. Run the GraphQL proxy container
+* Clone or download this repository, `git clone https://github.com/vanphandinh/mina-graphql-proxy.git`
+* Go inside of directory, `cd mina-graphql-proxy`
+* Run the docker-compose 
 ```
 MAINTAINER_EMAIL=your@email.com DOMAIN=your-domain.com MINA_GRAPHQL_HOST=mina docker-compose up -d
 ```
