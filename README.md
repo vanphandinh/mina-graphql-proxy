@@ -44,7 +44,7 @@ docker network create mina-network
 
 Example: 
 ```
-docker run --name mina -d \
+docker run --name **mina-container-name** -d \
 -p 8302:8302 \
 --restart=always \
 --network=mina-network \
@@ -67,3 +67,22 @@ MAINTAINER_EMAIL=your@email.com DOMAIN=your-domain.com MINA_GRAPHQL_HOST=mina do
 
 4. Check if your server blocked the following ports: `80` and `443` if yes, open it to the world.
 #### Congratulations! you've run a public GraphQL node for Mina successfully. Visit https://your-domain.com now.
+
+## Troubleshooting  
+If the mina-graphql-proxy can't connect to `mina:3085`:  
+
+If the connection hangs, then the following options are possible:  
+- Access to port `3085` is blocked via ufw\iptables  
+- You did not add a docker container flag `--network=mina-network \`  
+- Node is not synced yet. For this reason the stopper can't connect  
+
+2. Port responds, but the stopper still can't connect  
+`iptables -D OUTPUT -d 172.16.0.0/12 -j DROP`  
+it's because of the blocking of private subnets that the docker uses  
+
+## Uninstall  
+```
+rm -rf mina-graphql-proxy; \
+docker rm -f mina-graphql-api; \
+docker system prune -af
+```
