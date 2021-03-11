@@ -16,7 +16,7 @@ services:
     environment:
       MINA_GRAPHQL_HOST: ${MINA_GRAPHQL_HOST:-localhost}
       MINA_GRAPHQL_PORT: ${MINA_GRAPHQL_PORT:-3085}
-      MINA_GRAPHQL_PATH: ${MINA_GRAPHQL_PATH:-"/graphql"}
+      MINA_GRAPHQL_PATH: ${MINA_GRAPHQL_PATH:-/graphql}
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
     restart: always
     networks:
