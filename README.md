@@ -64,3 +64,6 @@ daemon \
 ```
 MAINTAINER_EMAIL=your@email.com DOMAIN=your-domain.com MINA_GRAPHQL_HOST=mina docker-compose up -d
 ```
+
+4. Check if your server blocked the following ports: `80` and `443` if yes, open it to the world.
+#### Congratulations! you've run a public GraphQL node for Mina successfully. Visit https://your-domain.com now.
