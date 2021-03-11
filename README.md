@@ -56,7 +56,8 @@ daemon \
 --log-level Info \
 --peer-list-url https://storage.googleapis.com/seed-lists/finalfinal2_seeds.txt
 ```
-Notice: `mina-container-name` is the name of the container that's running the Mina daemon, on (Mina's docs)[https://minaprotocol.com/docs/connecting], it's `mina`
+
+Notice: `mina-container-name` is the name of the container that's running the Mina daemon, on [Mina's docs](https://minaprotocol.com/docs/connecting), it's `mina`
 
 3. Run the GraphQL proxy container
 * Clone or download this repository, `git clone https://github.com/vanphandinh/mina-graphql-proxy.git`
@@ -65,7 +66,8 @@ Notice: `mina-container-name` is the name of the container that's running the Mi
 ```
 MAINTAINER_EMAIL=your@email.com DOMAIN=your-domain.com MINA_GRAPHQL_HOST=mina-container-name docker-compose up -d
 ```
-Notice: `mina-container-name` is the name of the container that's running the Mina daemon, on (Mina's docs)[https://minaprotocol.com/docs/connecting], it's `mina`
+
+Notice: `mina-container-name` is the name of the container that's running the Mina daemon, on [Mina's docs](https://minaprotocol.com/docs/connecting), it's `mina`
 
 4. Check if your server blocked the following ports: `80` and `443` if yes, open it to the world.
 #### Congratulations! you've run a public GraphQL node for Mina successfully. Visit https://your-domain.com now.
