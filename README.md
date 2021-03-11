@@ -26,14 +26,14 @@ This docker-compose file contains the following environment variables:
 * `MINA_GRAPHQL_PATH` the default value is **/graphql**
 
 ## Usages
-How to use this repo to run a public Mina GraphQL API node with the Mina node.\
+How to use this repo to run a public Mina GraphQL API node with the Mina node.
 
 1. Create a docker network: mina-network
 ```
 docker network create mina-network
 ```
 
-\2. Run a Mina node without block production or snark work creation on Docker
+2. Run a Mina node without block production or snark work creation on Docker
 
 #### Follow Docker section on this guide: https://minaprotocol.com/docs/connecting
 
@@ -57,7 +57,7 @@ daemon \
 --peer-list-url https://storage.googleapis.com/seed-lists/finalfinal2_seeds.txt
 ```
 
-\3. Run the GraphQL proxy container
+3. Run the GraphQL proxy container
 ```
 MAINTAINER_EMAIL=your@email.com DOMAIN=your-domain.com MINA_GRAPHQL_HOST=mina docker-compose up -d
 ```
