@@ -15,6 +15,7 @@ const ws = require("ws");
 const express = require("express");
 const https = require("https");
 const fs = require("fs");
+const httpProxy = require("http-proxy");
 
 const { hiddenFields } = require("./config");
 
@@ -96,7 +97,17 @@ async function main() {
     },
     app
   );
-  server.installSubscriptionHandlers(httpsServer);
+  // server.installSubscriptionHandlers(httpsServer);
+
+  // Set up proxy server for websocket
+  const proxy = httpProxy.createProxyServer({
+    target: { host: MINA_GRAPHQL_HOST, port: MINA_GRAPHQL_PORT },
+    ws: true,
+  });
+  proxy.on("error", (err) => console.log("Error in proxy server:", err));
+
+  // Proxy websocket upgrades
+  httpsServer.on("upgrade", (req, socket, head) => proxy.ws(req, socket, head));
 
   httpsServer.listen(443, () => {
     console.log(`🚀 Server ready at https://localhost${server.graphqlPath}`);

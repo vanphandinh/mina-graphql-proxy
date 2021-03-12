@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "greenlock-express": "^4.0.3",
+    "http-proxy": "^1.18.1",
     "https": "^1.0.0",
     "node-fetch": "^2.6.1",
     "subscriptions-transport-ws": "^0.9.18",
