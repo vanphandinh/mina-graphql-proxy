@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "start-manual": "node app-manual-ssl.js",
     "dev": "nodemon app.js"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "greenlock-express": "^4.0.3",
+    "https": "^1.0.0",
     "node-fetch": "^2.6.1",
     "subscriptions-transport-ws": "^0.9.18",
     "ws": "^7.4.4"
