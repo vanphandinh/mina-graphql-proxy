@@ -6,12 +6,12 @@ const {
   FilterRootFields,
 } = require("apollo-server-express");
 const { HttpLink } = require("apollo-link-http");
-const { WebSocketLink } = require("apollo-link-ws");
-const { split } = require("apollo-link");
-const { getMainDefinition } = require("apollo-utilities");
-const { SubscriptionClient } = require("subscriptions-transport-ws");
+// const { WebSocketLink } = require("apollo-link-ws");
+// const { split } = require("apollo-link");
+// const { getMainDefinition } = require("apollo-utilities");
+// const { SubscriptionClient } = require("subscriptions-transport-ws");
+// const ws = require("ws");
 const fetch = require("node-fetch");
-const ws = require("ws");
 const express = require("express");
 const https = require("https");
 const fs = require("fs");
@@ -23,32 +23,41 @@ const MINA_GRAPHQL_HOST = process.env["MINA_GRAPHQL_HOST"] || "localhost";
 const MINA_GRAPHQL_PORT = process.env["MINA_GRAPHQL_PORT"] || 3085;
 const MINA_GRAPHQL_PATH = process.env["MINA_GRAPHQL_PATH"] || "/graphql";
 
-async function getRemoteSchema({ uri, subscriptionsUri }) {
-  const httpLink = new HttpLink({ uri, fetch });
+// async function getRemoteSchema({ uri, subscriptionsUri }) {
+//   const httpLink = new HttpLink({ uri, fetch });
 
-  // Create WebSocket link with custom client
-  const client = new SubscriptionClient(
-    subscriptionsUri,
-    { reconnect: true },
-    ws
-  );
-  const wsLink = new WebSocketLink(client);
+//   // Create WebSocket link with custom client
+//   const client = new SubscriptionClient(
+//     subscriptionsUri,
+//     { reconnect: true },
+//     ws
+//   );
+//   const wsLink = new WebSocketLink(client);
 
-  // Using the ability to split links, we can send data to each link
-  // depending on what kind of operation is being sent
-  const link = split(
-    (operation) => {
-      const definition = getMainDefinition(operation.query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
-    },
-    wsLink, // <-- Use this if above function returns true
-    httpLink // <-- Use this if above function returns false
-  );
+//   // Using the ability to split links, we can send data to each link
+//   // depending on what kind of operation is being sent
+//   const link = split(
+//     (operation) => {
+//       const definition = getMainDefinition(operation.query);
+//       return (
+//         definition.kind === "OperationDefinition" &&
+//         definition.operation === "subscription"
+//       );
+//     },
+//     wsLink, // <-- Use this if above function returns true
+//     httpLink // <-- Use this if above function returns false
+//   );
 
-  const schema = await introspectSchema(httpLink);
+//   const schema = await introspectSchema(httpLink);
+//   const executableSchema = makeRemoteExecutableSchema({ schema, link });
+
+//   return executableSchema;
+// }
+
+async function getRemoteSchema({ uri }) {
+  const link = new HttpLink({ uri, fetch });
+
+  const schema = await introspectSchema(link);
   const executableSchema = makeRemoteExecutableSchema({ schema, link });
 
   return executableSchema;
@@ -70,7 +79,7 @@ async function main() {
 
   const remoteSchema = await getRemoteSchema({
     uri: `http://${graphqlUri}`,
-    subscriptionsUri: `ws://${graphqlUri}`,
+    // subscriptionsUri: `ws://${graphqlUri}`,
   });
   const schema = wrapSchema(remoteSchema);
 
