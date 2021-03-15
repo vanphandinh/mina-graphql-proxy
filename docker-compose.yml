@@ -19,6 +19,8 @@ services:
       MINA_GRAPHQL_PATH: ${MINA_GRAPHQL_PATH:-/graphql}
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
     restart: always
+    volumes:
+      - "~/greenlock.d/:/usr/src/app/greenlock.d/"
     networks:
       - mina-network
 
