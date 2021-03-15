@@ -22,7 +22,7 @@ services:
     command: >
       bash -c 'npx greenlock init --config-dir ./greenlock.d --maintainer-email $MAINTAINER_EMAIL && rm server.js
       && npx greenlock add --subject ${DOMAIN} --altnames "$DOMAIN,www.$DOMAIN"
-      && npm start -- --staging'
+      && npm start'
     networks:
       - mina-network
 
