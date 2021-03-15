@@ -6,9 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
-        DOMAIN: ${DOMAIN:-google.com}
     image: mina-graphql-proxy
     ports:
       - "80:80"
@@ -18,9 +15,14 @@ services:
       MINA_GRAPHQL_PORT: ${MINA_GRAPHQL_PORT:-3085}
       MINA_GRAPHQL_PATH: ${MINA_GRAPHQL_PATH:-/graphql}
       MAINTAINER_EMAIL: ${MAINTAINER_EMAIL:-mail@google.com}
+      DOMAIN: ${DOMAIN:-google.com}
     restart: always
     volumes:
       - "~/greenlock.d/:/usr/src/app/greenlock.d/"
+    command: >
+      bash -c 'npx greenlock init --config-dir ./greenlock.d --maintainer-email $MAINTAINER_EMAIL && rm server.js
+      && npx greenlock add --subject ${DOMAIN} --altnames "$DOMAIN,www.$DOMAIN"
+      && npm start -- --staging'
     networks:
       - mina-network
 
