@@ -16,5 +16,7 @@ module.exports = {
     "addPeers",
     "archivePrecomputedBlock",
     "archiveExtensionalBlock",
+    "setCoinbaseReceiver",
+    "importAccount",
   ],
 };
