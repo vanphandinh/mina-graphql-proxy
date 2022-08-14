@@ -107,10 +107,28 @@ async function httpsWorker(glx) {
   app.get("/", (req, res) => {
     res.status(301).redirect("/graphql");
   });
+  
+  const defaultQuery = `query {
+    daemonStatus {
+      stateHash
+      chainId
+      commitId
+      uptimeSecs
+      syncStatus
+      blockchainLength
+      highestBlockLengthReceived
+      highestUnvalidatedBlockLengthReceived
+      userCommandsSent
+    }
+  }`;
 
   const server = new ApolloServer({
     schema,
-    playground: true,
+    playground: {
+      settings: {
+        'editor.theme': 'light',
+      },
+    },
     tracing: true,
     introspection: true,
   });
